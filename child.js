@@ -1,7 +1,10 @@
+var fn_map_obj = require('./event.map.js')
 process.on('message', function (m) {
-	//console.log(m)
-	setTimeout(function(){
-		process.send({flag: m.flag, data: m.data*m.data})
-	}, m.data*1000)
+
+	var flag = m.flag.split('___')[0];
+	var fn = fn_map_obj[flag];
+	fn(m.data, function(err, data){
+		process.send({flag: m.flag, data: data, error: err})	
+	})
 	
 })
