@@ -1,14 +1,6 @@
-
-var child = require('child_process').fork('./child.js');
-var events = new require('events')
-var ev = new events.EventEmitter()
-ev.setMaxListeners(0)
-
-child.on('message', function(m){
-	console.log(m)
-	ev.emit(m.flag, m.data)
-})
-
+var cm = require('./child2parent.js')
+var child = cm.child;
+var ev = cm.ev;
 function async_like(arg, cb){
 	setTimeout(function(){
 		//console.log(arg, ev)
