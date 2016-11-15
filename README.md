@@ -1,6 +1,6 @@
 # nodejs_child_calculate
 
-give another way to face hight cpu calculate in nodejs
+give another way to face high cpu calculate in nodejs
 
 1，在 parent2child.js 中 默认创建一个有3个进程的进程池， 这些进程会轮流接受 守护进程（主进程）的命令。
 
