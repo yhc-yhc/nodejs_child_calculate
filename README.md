@@ -10,7 +10,8 @@ give another way to face high cpu calculate in nodejs
 
 ==================================================================
 
-    开发主在在 parent.js 和 event.map.js 两个文件中更改， parent.js主要是正常的 nodejs 进程工作的文件， 需要子进程频繁计算的写在 event.map.js 文件中，注意 parent.js 中的 flag 和 data 为必传参数， 且 flag 必须和 event.map.js 文件中的函数名 对应。
+        开发主在在 parent.js 和 event.map.js 两个文件中更改， parent.js主要是正常的 nodejs 进程工作的文件， 需要子进程频繁计算的
+    写在 event.map.js 文件中，注意 parent.js 中的 flag 和 data 为必传参数， 且 flag 必须和 event.map.js 文件中的函数名 对应。
     
 	var p2c = require('./parent2child.js')
 	var evn = require('./event.map.js')
