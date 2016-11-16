@@ -100,6 +100,14 @@ async_like_multi(7, function(err, data){
 	console.log(7, err, data)
 })
 
+async_like_multi(7, function(err, data){
+	console.log(7, err, data)
+})
+
+async_like_multi(7, function(err, data){
+	console.log(7, err, data)
+})
+
 async_like_multi(9, function(err, data){
 	console.log(9, err, data)
 })
