@@ -14,7 +14,7 @@ for (var i = 0; i < process_num; i++) {
 	work.on('message', function(m) {
 		//console.log(m)
 		var pid = m.pid;
-		var respose_work = works.filter(function(e, i, a){
+		var respose_work = works.filter(function(e, i, a) {
 			return e.pid == pid;
 		})[0];
 
@@ -31,16 +31,16 @@ for (var i = 0; i < process_num; i++) {
 }
 
 function getMostFreeWork(){
-	var b = works.every(function(e){
+	var b = works.every(function(e) {
 		return e.memoryUsage == 0;
 	})
 
 	if (b) {
-		return works.sort(function(c, p){
+		return works.sort(function(c, p) {
 			return (c.busy || 0) - (p.busy || 0)
 		})[0];
 	} else {
-		return works.sort(function(c, p){
+		return works.sort(function(c, p) {
 			return (c.memoryUsage || 0) - (p.memoryUsage || 0)
 		})[0];
 	}
@@ -59,7 +59,7 @@ module.exports = function(opt, fn) {
 		work.send({flag: flag, data: data});
 	}
 	
-	ev.once(flag, function(err, data){
+	ev.once(flag, function(err, data) {
 		fn(err, data)
 	})
 }
