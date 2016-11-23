@@ -1,5 +1,5 @@
 
-var p2c = require('./parent2child.js')
+var m2w = require('./master2work.js')
 var evn = require('./event.map.js')
 
 function async_like_add(arg, cb){
@@ -9,7 +9,7 @@ function async_like_add(arg, cb){
 		//console.log(flag)
 		var opt = {flag: flag, data: arg}
 
-		p2c(opt, function(err, data){
+		m2w(opt, function(err, data){
 			cb(err, data)
 		})
 	}, 1000)
@@ -22,7 +22,7 @@ function async_like_multi(arg, cb){
 
 		var opt = {flag: flag, data: arg}
 
-		p2c(opt, function(err, data){
+		m2w(opt, function(err, data){
 			cb(err, data)
 		})
 	}, 1000)

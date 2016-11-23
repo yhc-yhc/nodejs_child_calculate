@@ -4,7 +4,7 @@ process.on('message', function (m) {
 	var flag = m.flag.split('___')[0];
 	var fn = fn_map_obj[flag];
 	fn(m.data, function(err, data){
-		process.send({flag: m.flag, data: data, error: err, pid: process.pid})	
+		process.send({flag: m.flag, data: data, error: err, pid: process.pid, memoryUsage: process.memoryUsage().heapUsed})	
 	})
 	
 })

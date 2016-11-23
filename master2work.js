@@ -4,28 +4,27 @@ var ev = new events.EventEmitter()
 ev.setMaxListeners(0);
 
 var cp = require('child_process');
-var childs = [], flag_obj = {}; 
+var works = [], flag_obj = {}; 
 
 var process_num = process.env.process_num || 3;
-for(var i=0; i<process_num; i++){
-	var child = cp.fork('./child.js');
-	child.on('message', function(m){
+for (var i = 0; i < process_num; i++) {
+	var work = cp.fork('./work.js');
+	work.on('message', function(m) {
 		//console.log(m)
 		var pid = m.pid;
-		var respose_child = childs.filter(function(e, i, a){
+		var respose_work = works.filter(function(e, i, a){
 			return e.pid == pid;
 		})[0];
-		respose_child.busy--;
+		respose_work.busy --;
 		delete flag_obj[m.flag];
 		ev.emit(m.flag, m.error, m.data)
 	})
-	child.busy = 0;
-	childs.push(child);
+	works.push(work);
 }
 
-function getMostFreeChild(){
-	return childs.sort(function(c, p){
-		return c.busy - p.busy
+function getMostFreeWork(){
+	return works.sort(function(c, p){
+		return c.memoryUsage - p.memoryUsage
 	})[0];
 }
 
@@ -36,9 +35,9 @@ module.exports = function(opt, fn){
 
 	if(!flag_obj[flag]){
 		flag_obj[flag] = 1;
-		var child = getMostFreeChild();
-		child.busy ++ ;
-		child.send({flag: flag, data: data});
+		var work = getMostFreeWork();
+		work.busy ++; 
+		work.send({flag: flag, data: data});
 	}
 	
 	ev.once(flag, function(err, data){

@@ -2,18 +2,22 @@
 
 give another way to face high cpu calculate in nodejs
 
-1，在 parent2child.js 中 默认创建一个有3个进程的进程池， 这些进程会轮流接受 守护进程（主进程）的命令。
+1，在 master2work.js 中 默认创建一个有3个进程的进程池， 这些进程会轮流接受 守护进程（主进程）的命令。
 
-2，在 parent.js 中，每次需要子进程计算时，调用下 event.map.js 中的函数名，此函数名对应的是在子进程中进行密集计算的函数。
+2，在 master.js 中，每次需要子进程计算时，调用下 event.map.js 中的函数名，此函数名对应的是在子进程中进行密集计算的函数。
 
 3, 在 event.map.js 中， 写出需要子进程进行异步计算的函数。
 
+4, 新增功能，会根据works的内存使用量分配任务。
+
+5， 新增功能，如果work正在进行的计算还没有完成，master再分配的相同计算会不会计算，直到work计算完成后，一并给出结果。
+
 ==================================================================
 
-        开发主在在 parent.js 和 event.map.js 两个文件中更改， parent.js主要是正常的 nodejs 进程工作的文件， 需要子进程频繁计算的
-    写在 event.map.js 文件中，注意 parent.js 中的 flag 和 data 为必传参数， 且 flag 必须和 event.map.js 文件中的函数名 对应。
+        开发主在在 master.js 和 event.map.js 两个文件中更改， master.js主要是正常的 nodejs 进程工作的文件， 需要子进程频繁计算的
+    写在 event.map.js 文件中，注意 master.js 中的 flag 和 data 为必传参数， 且 flag 必须和 event.map.js 文件中的函数名 对应。
     
-	var p2c = require('./parent2child.js')
+	var m2w = require('./master2work.js')
 	var evn = require('./event.map.js')
 
 	function async_like_add(arg, cb){
@@ -23,7 +27,7 @@ give another way to face high cpu calculate in nodejs
 			//console.log(flag)
 			var opt = {flag: flag, data: arg}
 
-			p2c(opt, function(err, data){
+			m2w(opt, function(err, data){
 				cb(err, data)
 			})
 		}, 1000)
@@ -36,7 +40,7 @@ give another way to face high cpu calculate in nodejs
 
 			var opt = {flag: flag, data: arg}
 
-			p2c(opt, function(err, data){
+			m2w(opt, function(err, data){
 				cb(err, data)
 			})
 		}, 1000)
