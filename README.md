@@ -1,4 +1,4 @@
-# nodejs_child_calculate
+# process controll
 
 give another way to face high cpu calculate in nodejs
 
